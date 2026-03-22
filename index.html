@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Geffen & Gur's Game 🎮</title>
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/fishing.css">
 </head>
 <body tabindex="0">
   <div id="bg-overlay"></div>
@@ -14,6 +15,7 @@
   <div class="top-bar">
     <button class="mode-btn active" id="btn-geffen" aria-label="Switch to Geffen mode">🌟 Geffen</button>
     <button class="mode-btn" id="btn-gur" aria-label="Switch to Gur mode">📚 Gur</button>
+    <button class="mode-btn" id="btn-fishing" aria-label="Switch to Fishing mode" style="display:none">🎣 Fishing</button>
     <button id="lang-toggle" aria-label="Switch language">🇮🇱 עברית</button>
     <button id="dark-toggle" aria-label="Toggle dark mode">🌙</button>
   </div>
@@ -40,6 +42,24 @@
     </div>
   </div>
 
+  <div id="fishing-section">
+    <div style="text-align:center">
+      <h1 id="fish-title">🎣 Fishing Pond 🎣</h1>
+      <p class="subtitle" id="fish-subtitle">Wait for the bite... then press SPACE!</p>
+      <div class="pond" id="fish-pond">
+        <div class="pond-row reeds">🌿 🌾 &nbsp; 🌿 &nbsp; 🌾 🌿</div>
+        <div class="pond-row water" id="pond-row-top">🌊🌊🌊🌊🌊🌊🌊</div>
+        <div class="pond-row water bobber-row" id="pond-row-mid"><span class="pond-side">🌊🌊</span><span class="pond-bobber" id="fish-bobber">🔴</span><span class="pond-side">🌊🌊</span></div>
+        <div class="pond-row water" id="pond-row-bot">🌊🌊🌊🌊🌊🌊🌊</div>
+        <div class="pond-row ground">🪨 🐚 &nbsp; 🪸 &nbsp; 🐚 🪨</div>
+      </div>
+      <div id="fish-catch-display"></div>
+      <div id="fish-message">Press SPACE to cast your line!</div>
+      <div id="fish-score">🐟 Caught: 0</div>
+      <div id="fish-collection"></div>
+    </div>
+  </div>
+
   <div id="celebration"></div>
 
   <script src="js/config.js"></script>
@@ -47,6 +67,7 @@
   <script src="js/effects.js"></script>
   <script src="js/geffen.js"></script>
   <script src="js/gur.js"></script>
+  <script src="js/fishing.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

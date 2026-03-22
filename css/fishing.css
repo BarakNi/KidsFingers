@@ -1,0 +1,188 @@
+/* ===== Fishing Game ===== */
+#fishing-section {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  max-width: 100vw;
+}
+#fishing-section.active { display: flex; }
+
+/* ===== Emoji Pond Diorama ===== */
+.pond {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  user-select: none;
+}
+
+.pond-row {
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  line-height: 1.2;
+  letter-spacing: -2px;
+  white-space: nowrap;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.pond-row.reeds {
+  opacity: 0.7;
+  letter-spacing: 2px;
+  animation: reedsWave 4s ease-in-out infinite;
+}
+
+.pond-row.water {
+  animation: waterDrift 3s ease-in-out infinite;
+}
+.pond-row.water:nth-child(2) { animation-delay: 0s; }
+.pond-row.water:nth-child(4) { animation-delay: 1.5s; }
+
+.pond-row.ground {
+  opacity: 0.5;
+  letter-spacing: 2px;
+}
+
+/* Bobber row */
+.bobber-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+.pond-side {
+  letter-spacing: -2px;
+}
+
+.pond-bobber {
+  display: inline-block;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  transition: transform 0.3s, filter 0.3s;
+  position: relative;
+  z-index: 2;
+  margin: 0 2px;
+}
+.pond-bobber.floating {
+  animation: bobberFloat 2.5s ease-in-out infinite;
+}
+.pond-bobber.dipping {
+  animation: bobberDip 0.35s ease-in-out infinite;
+  filter: brightness(1.2);
+}
+.pond-bobber.caught-anim {
+  animation: bobberCatch 0.5s ease-out forwards;
+}
+
+/* Pond state: ripples on bite */
+.pond.rippling .pond-row.water {
+  animation: waterRipple 0.4s ease-in-out infinite;
+}
+.pond.rippling .pond-row.water:nth-child(2) { animation-delay: 0s; }
+.pond.rippling .pond-row.water:nth-child(4) { animation-delay: 0.15s; }
+
+/* ===== Catch Display — BIG and rewarding ===== */
+#fish-catch-display {
+  font-size: clamp(2rem, 8vw, 4rem);
+  min-height: 50px;
+  margin-top: 10px;
+  transition: font-size 0.3s;
+}
+#fish-catch-display.caught-big {
+  font-size: clamp(6rem, 22vw, 12rem);
+  animation: catchPop 0.6s ease-out;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.12));
+}
+
+/* ===== Messages ===== */
+#fish-message {
+  font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+  color: var(--text);
+  margin-top: 10px;
+  min-height: 36px;
+  transition: color 0.3s, transform 0.2s;
+}
+#fish-message.urgent {
+  color: #e53e3e;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: bold;
+  animation: urgentPulse 0.5s ease-in-out infinite;
+}
+#fish-message.caught-msg {
+  font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+  animation: catchMsgPop 0.4s ease-out;
+}
+
+/* ===== Score & Collection ===== */
+#fish-score {
+  margin-top: 12px;
+  padding: 8px 20px;
+  background: var(--score-bg);
+  border-radius: 16px;
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  color: var(--score-text);
+}
+
+#fish-collection {
+  margin-top: 10px;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  max-width: 90vw;
+  word-wrap: break-word;
+  line-height: 1.6;
+  min-height: 30px;
+}
+
+/* ===== Animations ===== */
+@keyframes reedsWave {
+  0%, 100% { transform: skewX(0deg); }
+  25% { transform: skewX(2deg); }
+  75% { transform: skewX(-2deg); }
+}
+
+@keyframes waterDrift {
+  0%, 100% { transform: translateX(0); opacity: 0.85; }
+  50% { transform: translateX(4px); opacity: 1; }
+}
+
+@keyframes waterRipple {
+  0%, 100% { transform: scaleX(1) scaleY(1); }
+  25% { transform: scaleX(1.03) scaleY(0.95); }
+  75% { transform: scaleX(0.97) scaleY(1.05); }
+}
+
+@keyframes bobberFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  30% { transform: translateY(-5px) rotate(3deg); }
+  70% { transform: translateY(3px) rotate(-2deg); }
+}
+
+@keyframes bobberDip {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(10px) scale(0.85); }
+}
+
+@keyframes bobberCatch {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.5) rotate(10deg); }
+  70% { transform: scale(0.9) rotate(-5deg); }
+  100% { transform: scale(1.2) rotate(0deg); }
+}
+
+@keyframes urgentPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes catchPop {
+  0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+  50% { transform: scale(1.3) rotate(10deg); opacity: 1; }
+  70% { transform: scale(0.9) rotate(-5deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes catchMsgPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
