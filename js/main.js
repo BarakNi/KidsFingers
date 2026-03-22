@@ -22,7 +22,7 @@ function updateUIText() {
   document.getElementById('gef-title').textContent = lang.ui.gefTitle;
   document.getElementById('gef-subtitle').textContent = lang.ui.gefSubtitle;
   document.getElementById('gur-title').textContent = lang.ui.gurTitle;
-  document.getElementById('gur-subtitle').textContent = lang.ui.gurSubtitle;
+  document.getElementById('gur-subtitle').textContent = emojiOnlyActive ? lang.ui.emojiOnlySubtitle : lang.ui.gurSubtitleNormal;
   liftPrompt.innerHTML = lang.ui.liftPrompt;
 
   // Set text direction
@@ -42,6 +42,7 @@ langToggle.addEventListener('click', (e) => {
   // Reset Gur state when switching language
   gurStreak = 0;
   gurBestStreak = 0;
+  emojiOnlyActive = false;
   if (mode === 'gur') loadNewWord();
   document.body.focus();
 });
