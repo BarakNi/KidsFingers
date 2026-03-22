@@ -42,14 +42,15 @@ function playWinMelody() {
 function speakWord(word) {
   if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
+  const lang = getLang();
   const utter = new SpeechSynthesisUtterance(word);
   utter.rate = speechRate;
   utter.pitch = speechPitch;
-  utter.lang = 'en-US';
+  utter.lang = lang.speechLang;
   const voices = window.speechSynthesis.getVoices();
-  const preferred = voices.find(v => v.lang.startsWith('en') && v.name.includes('Samantha'))
-    || voices.find(v => v.lang.startsWith('en-US'))
-    || voices.find(v => v.lang.startsWith('en'));
+  const langPrefix = lang.speechLang.split('-')[0];
+  const preferred = voices.find(v => v.lang === lang.speechLang)
+    || voices.find(v => v.lang.startsWith(langPrefix));
   if (preferred) utter.voice = preferred;
   window.speechSynthesis.speak(utter);
 }

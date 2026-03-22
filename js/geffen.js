@@ -3,12 +3,13 @@
  */
 
 function handleGeffen(key) {
-  const upper = key.toUpperCase();
+  const lang = getLang();
+  const normalized = lang.normalizeKey(key);
   let emoji, word;
 
-  if (letterEmojis[upper]) {
-    emoji = randomFrom(letterEmojis[upper]);
-    word = emojiNames[emoji] || '';
+  if (lang.letterEmojis[normalized]) {
+    emoji = randomFrom(lang.letterEmojis[normalized]);
+    word = lang.emojiNames[emoji] || '';
   } else {
     emoji = randomFrom(nonLetterEmojis);
     word = '';
@@ -20,13 +21,13 @@ function handleGeffen(key) {
   void emojiDisplay.offsetWidth;
   emojiDisplay.classList.add('bounce');
 
-  document.getElementById('letter-display').textContent = upper.length === 1 ? upper : '🎵';
+  document.getElementById('letter-display').textContent = normalized.length === 1 ? normalized : '🎵';
   document.getElementById('word-display').textContent = word;
   changeBg();
   playHappySound();
 
   for (let i = 0; i < 3; i++) {
-    setTimeout(() => spawnFloatingEmoji(randomFrom(letterEmojis[upper] || nonLetterEmojis)), i * 100);
+    setTimeout(() => spawnFloatingEmoji(randomFrom(lang.letterEmojis[normalized] || nonLetterEmojis)), i * 100);
   }
   spawnSparkles(6);
 }

@@ -13,13 +13,14 @@
   <div class="top-bar">
     <button class="mode-btn active" id="btn-geffen" aria-label="Switch to Geffen mode">🌟 Geffen</button>
     <button class="mode-btn" id="btn-gur" aria-label="Switch to Gur mode">📚 Gur</button>
+    <button id="lang-toggle" aria-label="Switch language">🇮🇱 עברית</button>
     <button id="dark-toggle" aria-label="Toggle dark mode">🌙</button>
   </div>
 
   <div id="geffen-section">
     <div style="text-align:center">
-      <h1>🌟 Geffen's Game 🌟</h1>
-      <p class="subtitle">Press a key — then lift your finger!</p>
+      <h1 id="gef-title">🌟 Geffen's Game 🌟</h1>
+      <p class="subtitle" id="gef-subtitle">Press a key — then lift your finger!</p>
       <div id="emoji-display">🎈</div>
       <div id="word-display"></div>
       <div id="letter-display">?</div>
@@ -28,8 +29,8 @@
 
   <div id="gur-section">
     <div style="text-align:center">
-      <h1>📚 Gur's Game 📚</h1>
-      <p class="subtitle">Type the word you see!</p>
+      <h1 id="gur-title">📚 Gur's Game 📚</h1>
+      <p class="subtitle" id="gur-subtitle">Type the word you see!</p>
       <div id="gur-emoji" style="font-size:clamp(4rem,14vw,7rem);min-height:80px;">🍎</div>
       <div id="target-word">A P P L E</div>
       <div id="typed-word"></div>
@@ -40,7 +41,6 @@
 
   <div id="celebration"></div>
 
-  <!-- Config first (data), then modules, then main (init) -->
   <script src="js/config.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/effects.js"></script>

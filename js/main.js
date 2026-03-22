@@ -1,5 +1,5 @@
 /**
- * main.js — App initialization, mode switching, keyboard handling.
+ * main.js — App initialization, mode switching, keyboard handling, language toggle.
  */
 
 let mode = 'geffen';
@@ -14,6 +14,37 @@ const gurSection = document.getElementById('gur-section');
 const btnGeffen = document.getElementById('btn-geffen');
 const btnGur = document.getElementById('btn-gur');
 const darkToggle = document.getElementById('dark-toggle');
+const langToggle = document.getElementById('lang-toggle');
+
+// ===== Update all UI text for current language =====
+function updateUIText() {
+  const lang = getLang();
+  document.getElementById('gef-title').textContent = lang.ui.gefTitle;
+  document.getElementById('gef-subtitle').textContent = lang.ui.gefSubtitle;
+  document.getElementById('gur-title').textContent = lang.ui.gurTitle;
+  document.getElementById('gur-subtitle').textContent = lang.ui.gurSubtitle;
+  liftPrompt.innerHTML = lang.ui.liftPrompt;
+
+  // Set text direction
+  document.getElementById('geffen-section').style.direction = lang.dir;
+  document.getElementById('gur-section').style.direction = lang.dir;
+
+  // Update score text
+  if (mode === 'gur') updateScoreDisplay();
+}
+
+// ===== Language toggle =====
+langToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  gameLang = gameLang === 'en' ? 'he' : 'en';
+  langToggle.textContent = gameLang === 'en' ? '🇮🇱 עברית' : '🇬🇧 English';
+  updateUIText();
+  // Reset Gur state when switching language
+  gurStreak = 0;
+  gurBestStreak = 0;
+  if (mode === 'gur') loadNewWord();
+  document.body.focus();
+});
 
 // ===== Dark mode =====
 darkToggle.addEventListener('click', (e) => {
@@ -52,10 +83,12 @@ document.addEventListener('keydown', (e) => {
   hideLiftPrompt();
 
   const key = e.key;
+  const lang = getLang();
+
   if (mode === 'geffen') {
     handleGeffen(key.length === 1 ? key : '');
   } else {
-    if (key.length === 1 && /[a-zA-Z]/.test(key)) handleGur(key);
+    if (key.length === 1 && lang.isLetter(key)) handleGur(key);
   }
 
   holdTimer = setTimeout(() => { if (keyIsDown) showLiftPrompt(); }, holdPromptDelay);
@@ -68,8 +101,10 @@ document.addEventListener('keyup', () => {
 });
 
 document.addEventListener('click', (e) => {
-  if (e.target.closest('.mode-btn') || e.target.closest('#dark-toggle')) return;
+  if (e.target.closest('.mode-btn') || e.target.closest('#dark-toggle') || e.target.closest('#lang-toggle')) return;
   if (mode === 'geffen') handleGeffen('');
 });
 
+// ===== Init =====
+updateUIText();
 document.body.focus();

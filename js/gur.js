@@ -8,7 +8,8 @@ let gurStreak = 0;
 let gurBestStreak = 0;
 
 function loadNewWord() {
-  currentGurWord = randomFrom(wordList);
+  const lang = getLang();
+  currentGurWord = randomFrom(lang.wordList);
   gurTypedIndex = 0;
   document.getElementById('gur-emoji').textContent = currentGurWord.emoji;
   document.getElementById('target-word').textContent = currentGurWord.word.split('').join(' ');
@@ -32,9 +33,10 @@ function renderGurTyped() {
 }
 
 function updateScoreDisplay() {
+  const lang = getLang();
   const el = document.getElementById('score-display');
-  let text = `🔥 Streak: ${gurStreak}`;
-  if (gurBestStreak > 0) text += `  ·  ⭐ Best: ${gurBestStreak}`;
+  let text = `🔥 ${lang.ui.streak}: ${gurStreak}`;
+  if (gurBestStreak > 0) text += `  ·  ⭐ ${lang.ui.best}: ${gurBestStreak}`;
   el.textContent = text;
 }
 
@@ -47,10 +49,11 @@ function bumpScore() {
 
 function handleGur(key) {
   if (!currentGurWord) return;
-  const upper = key.toUpperCase();
+  const lang = getLang();
+  const normalized = lang.normalizeKey(key);
   const expected = currentGurWord.word[gurTypedIndex];
 
-  if (upper === expected) {
+  if (normalized === expected) {
     gurTypedIndex++;
     playCorrectSound();
     spawnSparkles(4);
@@ -79,11 +82,12 @@ function handleGur(key) {
 }
 
 function showCelebration(emoji, word) {
+  const lang = getLang();
   const celebration = document.getElementById('celebration');
   celebration.innerHTML = `<div style="text-align:center">
     <div style="font-size:clamp(4rem,14vw,8rem)">${emoji}</div>
     <div style="font-size:clamp(1.6rem,5vw,3rem);color:var(--celebration-text);margin-top:10px">🎉 ${word}! 🎉</div>
-    <div style="font-size:clamp(1rem,3vw,1.5rem);color:var(--celebration-sub);margin-top:8px">Great job! 👏  Streak: ${gurStreak} 🔥</div>
+    <div style="font-size:clamp(1rem,3vw,1.5rem);color:var(--celebration-sub);margin-top:8px">${lang.ui.greatJob}  ${lang.ui.streak}: ${gurStreak} 🔥</div>
   </div>`;
   celebration.classList.add('show');
   for (let i = 0; i < 12; i++) {
